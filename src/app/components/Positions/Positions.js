@@ -29,8 +29,8 @@ export const Positions = () => {
     <div className="px-10 py-6">
       <div className="flex gap-4">
         <div className="basis-1/3">
-          <div className="flex flex-col max-h-[704px] no-scrollbar overflow-auto gap-2 mb-2">
-            {cards.map((card, index) => (
+          <div className="flex flex-col max-h-[540px] no-scrollbar overflow-auto gap-2 mb-2">
+            {cards.map((card) => (
               <ProductLevelCard
                 key={card.id}
                 id={card.id}
@@ -42,7 +42,6 @@ export const Positions = () => {
                 onDrop={onDrop}
                 isActive={card.id === activeCardId}
                 onFinishEditing={handleFinishEditing}
-                isLast={index === card.length - 1}
               />
             ))}
           </div>
