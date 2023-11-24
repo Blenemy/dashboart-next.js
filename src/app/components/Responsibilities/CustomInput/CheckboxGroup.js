@@ -21,7 +21,7 @@ export const CheckboxGroup = ({ options, onChange, title }) => {
         {options.map((option) => (
           <CustomCheckbox
             key={option.id}
-            id={`checkbox-${option.id}`}
+            id={`${title}-${option.id}`}
             label={option.label}
             checked={option.checked}
             onChange={(e) => onChange(option.id, e.target.checked)}

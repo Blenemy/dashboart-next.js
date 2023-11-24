@@ -7,7 +7,7 @@
  * @param {Array} props.tabs - The array of tab objects with 'name' and 'content'.
  */
 
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import cn from "classnames";
 
 export const Tabs = ({ tabs }) => {
@@ -41,7 +41,7 @@ export const Tabs = ({ tabs }) => {
       <div className="h-full">
         {tabs.map((tab) => {
           if (tab.name === activeTab) {
-            return <div key={tab.name}>{tab.content}</div>;
+            return <Fragment key={tab.name}>{tab.content}</Fragment>;
           }
           return null;
         })}

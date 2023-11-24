@@ -5,51 +5,40 @@
  * @returns {JSX.Element} A form with checkbox groups for trading, production, skirmish, and management options.
  */
 
+import { useManageCheckboxes } from "@/app/hooks/useManageCheckboxes";
 import { CheckboxGroup } from "./CustomInput/CheckboxGroup";
-import {
-  managementOptions,
-  productionOptions,
-  tradingOptions,
-  skirmishOptions,
-} from "@/app/assets/constants/responsibilitiesData";
-import { useCheckboxState } from "@/app/hooks/useCheckboxState";
 
 export const Responsibilities = () => {
-  const [tradingCheckboxes, setTradingChecked] =
-    useCheckboxState(tradingOptions);
-  const [productionCheckboxes, setProductionChecked] =
-    useCheckboxState(productionOptions);
-  const [managementCheckboxes, setManagementChecked] =
-    useCheckboxState(managementOptions);
-  const [skirmishCheckboxes, setSkirmishChecked] =
-    useCheckboxState(skirmishOptions);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
+  const { handleCheckboxChange, checkboxStates } = useManageCheckboxes();
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-wrap gap-y-3">
+    <div className="flex flex-wrap gap-y-3">
       <CheckboxGroup
-        options={tradingCheckboxes}
-        onChange={setTradingChecked}
+        options={checkboxStates.trading}
+        onChange={(id, checked) => handleCheckboxChange("trading", id, checked)}
         title="Торговля"
       />
       <CheckboxGroup
-        options={productionCheckboxes}
-        onChange={setProductionChecked}
+        options={checkboxStates.production}
+        onChange={(id, checked) =>
+          handleCheckboxChange("production", id, checked)
+        }
         title="Производство"
       />
       <CheckboxGroup
-        options={skirmishCheckboxes}
-        onChange={setSkirmishChecked}
+        options={checkboxStates.skirmish}
+        onChange={(id, checked) =>
+          handleCheckboxChange("skirmish", id, checked)
+        }
         title="Разборки"
       />
       <CheckboxGroup
-        options={managementCheckboxes}
-        onChange={setManagementChecked}
+        options={checkboxStates.management}
+        onChange={(id, checked) =>
+          handleCheckboxChange("management", id, checked)
+        }
         title="Управление"
       />
-    </form>
+    </div>
   );
 };

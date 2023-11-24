@@ -29,7 +29,6 @@ export const ProductLevelCard = memo(
     onDragOver,
     onDrop,
     isActive,
-    isLast,
   }) => {
     return (
       <div
@@ -38,10 +37,9 @@ export const ProductLevelCard = memo(
         onDragOver={onDragOver}
         onDrop={(e) => onDrop(e, id)}
         className={cn(
-          "bg-lightBg text-[#F5F5F5] rounded-lg hover:cursor-grab relative fade-shadow",
+          "bg-lightBg text-[#F5F5F5] rounded-lg hover:cursor-grab relative h-20",
           {
             "border-2 border-customViolet": isActive,
-            "bg-gradient-to-b from-transparent to-[#292930]": isLast,
           }
         )}
       >
