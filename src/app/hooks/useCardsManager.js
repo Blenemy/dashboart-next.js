@@ -1,9 +1,19 @@
 import { useCallback, useState } from "react";
 import { initialCardsState } from "../assets/constants/initialCardsState";
+import useLocalStorage from "./useLocalStorage";
 
 export const useCardsManager = () => {
-  const [cards, setCards] = useState(initialCardsState);
+  const [cards, setCards] = useLocalStorage(initialCardsState);
   const [activeCardId, setActiveCardId] = useState(null);
+
+  const createCard = (title) => {
+    return {
+      id: Math.max(0, ...cards.map((c) => c.id)) + 1,
+      title,
+      price: "50",
+      description: "от 10 lvl",
+    };
+  };
 
   const onDragStart = useCallback((e, id) => {
     e.dataTransfer.setData("cardId", id);
@@ -37,25 +47,31 @@ export const useCardsManager = () => {
   );
 
   const handleAddNewCard = useCallback(() => {
-    const newCardId = Math.max(0, ...cards.map((c) => c.id)) + 1;
-    const newCard = {
-      id: newCardId,
-      title: "Новобранец",
-      price: "50",
-      description: "от 10 lvl",
-    };
-
+    const newCard = createCard("Новобранец");
     setCards((prevCards) => [newCard, ...prevCards]);
-    setActiveCardId(newCardId);
+    setActiveCardId(newCard.id);
   }, [cards]);
 
   const handleFinishEditing = useCallback(() => {
     setActiveCardId(null);
   }, []);
 
-  const handleSaveChanges = useCallback(() => {
-    setActiveCardId(false);
-  }, []);
+  const handleSaveChanges = useCallback(
+    (title) => {
+      if (activeCardId) {
+        setCards((prevCards) =>
+          prevCards.map((card) =>
+            card.id === activeCardId ? { ...card, title } : card
+          )
+        );
+      } else {
+        const newCard = createCard(title);
+        setCards((prevCards) => [newCard, ...prevCards]);
+      }
+      setActiveCardId(null);
+    },
+    [activeCardId, cards]
+  );
 
   return {
     cards,
